@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="iiwa7_gripper">
+
+<xacro:include filename="$(find iiwa_description)/urdf/utilities.xacro" />
+
+    <!-- gripper -->
+    <link name="door2">
+      <inertial>
+        <mass value="1"/>
+        <xacro:cuboid_inertia width="0.5" height="1" length="0.05" mass="4" />
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="10000 0 0"/>
+        <geometry>
+          <box size = "0.5 0.05 1"/>
+        </geometry>
+        <material name="White">
+          <color rgba="1.0 1.0 1.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="-0.25 0 0"/>
+        <geometry>
+          <box size = "0.5 0.05 1"/>
+        </geometry>
+        <material name="White">
+          <color rgba="1.0 1.0 1.0 1.0"/>
+        </material>
+      </collision>
+    </link>
+
+    <link name="door1">
+      <inertial>
+        <mass value="1"/>
+        <xacro:cuboid_inertia width="0.5" height="1" length="0.05" mass="4" />
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="10000 0 0"/>
+        <geometry>
+          <box size = "0.5 0.05 1"/>
+        </geometry>
+        <material name="White">
+          <color rgba="1.0 1.0 1.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0.25 0 0"/>
+        <geometry>
+          <box size = "0.5 0.05 1"/>
+        </geometry>
+        <material name="White">
+          <color rgba="1.0 1.0 1.0 1.0"/>
+        </material>
+      </collision>
+    </link>
+
+
+    <link name="lock_base">
+      <inertial>
+        <mass value="0.5"/>
+        <xacro:cuboid_inertia width="0.02" height="0.01" length="0.1" mass="0.1" />
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="0 1000000 0"/>
+        <geometry>
+          <box size = "0.02 0.1 0.01"/>
+        </geometry>
+        <material name="Orange">
+          <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0.05 0"/>
+        <geometry>
+          <box size = "0.02 0.1 0.01"/>
+        </geometry>
+        <material name="Orange">
+          <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+        </material>
+      </collision>
+    </link>
+
+
+    <link name="lock">
+      <inertial>
+        <mass value="0.5"/>
+        <xacro:cuboid_inertia width="0.04" height="0.04" length="0.12" mass="0.1" />
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="10000 0 0"/>
+        <geometry>
+          <box size = "0.12 0.04 0.04"/>
+        </geometry>
+        <material name="Red">
+          <color rgba="0.8 0.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="-0.06 0 0"/>
+        <geometry>
+          <box size = "0.12 0.04 0.04"/>
+        </geometry>
+          <material name="Red">
+            <color rgba="0.8 0.0 0.0 1.0"/>
+          </material>
+      </collision>
+    </link>
+
+
+    <link name="knob">
+      <inertial>
+        <mass value="0.1"/>
+        <xacro:cylinder_inertia radius="0.02" length="0.15" mass="0.1" />
+      </inertial>
+      <visual>
+        <origin rpy="1.57075 0 0" xyz="100000 0 0"/>
+        <geometry>
+          <cylinder length="0.15" radius="0.02"/>
+        </geometry>
+        <material name="Brown">
+          <color rgba="${222/255} ${207/255} ${195/255} 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.15" radius="0.02"/>
+        </geometry>
+        <material name="Brown">
+          <color rgba="${222/255} ${207/255} ${195/255} 1.0"/>
+        </material>
+      </collision>
+    </link>
+     <!-- gripper joint with base-->
+    <joint name="knob_to_lock" type="fixed">
+      <origin rpy="0 0 0" xyz="0 100000 0"/>
+      <parent link="knob"/>
+      <child link="lock"/>
+    </joint>
+	<joint name="world1toknob" type="fixed">
+      <origin rpy="0 0 0" xyz="0 100000 0"/>
+      <parent link="world1"/>
+      <child link="knob"/>
+    </joint>
+    <joint name="world1todoor2" type="fixed">
+      <origin rpy="0 0 0" xyz="0 1000000 0"/>
+      <parent link="world1"/>
+      <child link="door2"/>
+    </joint>
+
+    <joint name="door_to_base" type="fixed">
+      <origin rpy="0 0 0" xyz="0.49 0 -0.04"/>
+      <parent link="door1"/>
+      <child link="lock_base"/>
+    </joint>
+
+
+    <joint name="door_to_knob" type="revolute">
+      <axis xyz="0 1 0"/>
+      <limit effort="100.0" lower="0.0" upper="3" velocity="0.5"/>
+      <origin rpy="0 0 0" xyz="-0.46 0 0"/>
+      <parent link="door2"/>
+      <child link="knob"/>
+    </joint>
+
+
+ 
+  </robot>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<!-- Here we define the robot, we named it "iiwa7_tool" -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_iiwa7">
+
+  <!--  Arguments for the iiwa7 macro  -->
+  
+  <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
+  <xacro:arg name="robot_name" default="iiwa7"/>
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find iiwa_description)/urdf/materials.xacro" />
+  <!--Import the iiwa7 macro -->
+  <xacro:include filename="$(find iiwa_description)/urdf/iiwa7.xacro"/>
+   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find iiwa_description)/urdf/iiwa.gazebo.xacro" />
+  <!-- Import Transmissions -->
+  <xacro:include filename="$(find iiwa_description)/urdf/iiwa.transmission.xacro" />
+  <!-- Include Utilities -->
+  <!--xacro:include filename="$(find iiwa_description)/urdf/utilities.xacro" /-->
+<xacro:include filename="$(find iiwa_description)/urdf/cabinet.xacro" />
+
+  <link name="world1">
+    <inertial>
+        <mass value="100"/>
+        <xacro:cuboid_inertia mass="100" height="1" width="1" length = "1" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="1 1 1"/>
+        </geometry>
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="1 1 1"/>
+        </geometry>
+      </collision>
+  </link>
+  
+  <!-- Here we insert an iiwa7 robot in the scene, it's origin is just on top of the box previously defined. You can use 0,0,0 if you don't have that. -->
+  <xacro:iiwa7 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot_name)" parent="world1">
+    <origin xyz="0 0 0.5" rpy="0 0 0"/>
+  </xacro:iiwa7>
+  <xacro:include filename="$(find iiwa_description)/urdf/gripper.xacro"/>
+   <!--Extensions -->
+  <xacro:iiwa_gazebo robot_name="$(arg robot_name)" />
+  <xacro:iiwa_transmission hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot_name)" />
+
+  <joint name="world_to_door2" type="fixed">
+      <axis xyz="0 0 1"/>
+      <limit effort="10" lower="0" upper="2" velocity="0.5"/>
+      <origin rpy="0 0 0" xyz="0.52 0.81 1"/>
+      <parent link="world1"/>
+      <child link="door2"/>
+    </joint>
+    <joint name="world_to_door1" type="fixed">
+      <origin rpy="0 0 0" xyz="-0.52 0.8 1"/>
+      <parent link="world1"/>
+      <child link="door1"/>
+    </joint>
+
+
+
+</robot>

@@ -1,0 +1,11 @@
+type: "position_controllers/JointGroupPositionController"
+joints:
+  - iiwa7_joint_1
+  - iiwa7_joint_2
+  - iiwa7_joint_3
+  - iiwa7_joint_4
+  - iiwa7_joint_5
+  - iiwa7_joint_6
+  - iiwa7_joint_7
+  - left_gripper_joint
+  - right_gripper_joint

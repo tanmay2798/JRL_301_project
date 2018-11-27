@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="iiwa_gazebo" params="robot_name">
+    
+    <!-- Load Gazebo lib and set the robot namespace -->
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+    </gazebo>
+
+    <!-- world -->
+     <gazebo reference="world1">
+      <static>true</static>
+      <material>Gazebo/Black</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+    <!-- Link0 -->
+    <gazebo reference="${robot_name}_link_0">
+      <material>Gazebo/Grey</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+    <!-- Link1 -->
+    <gazebo reference="${robot_name}_link_1">
+      <material>Gazebo/Orange</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+    <gazebo reference="door1">
+      <material>Gazebo/Grey</material>
+      <mu1>5.0</mu1>
+      <mu2>5.0</mu2>
+    </gazebo>
+    <gazebo reference="door2">
+      <material>Gazebo/Grey</material>
+      <mu1>5.0</mu1>
+      <mu2>5.0</mu2>
+    </gazebo>
+    <gazebo reference="lock_base">
+      <material>Gazebo/Orange</material>
+      <mu1>5.0</mu1>
+      <mu2>5.0</mu2>
+    </gazebo>
+    <gazebo reference="lock">
+      <material>Gazebo/Red</material>
+      <mu1>5.0</mu1>
+      <mu2>5.0</mu2>
+    </gazebo>
+    <gazebo reference="knob">
+      <material>Gazebo/White</material>
+      <mu1>5.0</mu1>
+      <mu2>5.0</mu2>
+    </gazebo>
+
+    <!-- Link2 -->
+    <gazebo reference="${robot_name}_link_2">
+      <material>Gazebo/Orange</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+    <!-- Link3 -->
+    <gazebo reference="${robot_name}_link_3">
+      <material>Gazebo/Orange</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+
+    <!-- Link4 -->
+    <gazebo reference="${robot_name}_link_4">
+      <material>Gazebo/Orange</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+    <!-- Link5 -->
+    <gazebo reference="${robot_name}_link_5">
+      <material>Gazebo/Orange</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+    <!-- Link6 -->
+    <gazebo reference="${robot_name}_link_6">
+      <material>Gazebo/Orange</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+    <!-- Link7 -->
+    <gazebo reference="${robot_name}_link_7">
+      <material>Gazebo/Grey</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+    </gazebo>
+
+    <!--Adding friction to tip-->
+    <gazebo reference="left_gripper">
+       <material>Gazebo/Grey</material>
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
+
+     <!--Adding friction to gripper-->
+     <gazebo reference="left_tip">
+      <material>Gazebo/Grey</material>
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
+
+<!--Adding friction to tip-->
+    <gazebo reference="right_gripper">
+      <material>Gazebo/Grey</material>
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
+
+     <!--Adding friction to gripper-->
+     <gazebo reference="right_tip">
+      <material>Gazebo/Grey</material>
+      <mu1>5</mu1>
+      <mu2>5</mu2>
+    </gazebo>
+  </xacro:macro>
+
+</robot>
+

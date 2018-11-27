@@ -1,0 +1,16 @@
+<launch>
+  <arg name="model" default="$(find iiwa_description)/urdf/robot.xacro"/>
+  <include file="$(find urdf_tutorial)/launch/gazebo.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+  <rosparam command="load"
+            file="$(find iiwa_description)/config/joint_pub.yaml"
+            ns="iiwa_joint_states" />
+  <rosparam command="load"
+            file="$(find iiwa_description)/config/joint_sub.yaml"
+            ns="iiwa_command" />
+
+  <node name="iiwa_controller_spawner" pkg="controller_manager" type="spawner"
+    args="iiwa_joint_states iiwa_command"/>
+</launch>
