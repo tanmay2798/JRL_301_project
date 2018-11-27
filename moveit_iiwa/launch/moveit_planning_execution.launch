@@ -1,0 +1,47 @@
+<launch>
+<rosparam command = "load" file="$(find moveit_iiwa)/config/joint_names.yaml"/>
+<arg name="hardware_interface" default="PositionJointInterface"/>
+<arg name="robot_name" default="iiwa"/>
+<arg name="model" default="iiwa7"/>
+<include file="$(find moveit_iiwa)/launch/planning_context.launch" >
+
+<arg name="load_robot_description" value="true" />
+
+
+</include>
+
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+
+<param name="/use_gui" value="false"/>
+
+<rosparam param="/source_list">[/joint_states]</rosparam>
+
+</node>
+
+<include file="$(find moveit_iiwa)/launch/move_group.launch">
+
+<arg name="publish_monitored_planning_scene" value="true" />
+
+</include>
+
+<include file="$(find moveit_iiwa)/launch/moveit_rviz.launch">
+
+<arg name="config" value="true"/>
+
+</include>
+
+<!--node name="iiwa_controller_spawner" pkg="controller_manager" type="spawner"
+    args="follow_joint_trajectory"/-->
+<include file="$(find iiwa_control)/launch/iiwa_control.launch">
+    <arg name="hardware_interface" value="$(arg hardware_interface)" />
+    <arg name="controllers" value="joint_state_controller $(arg hardware_interface)_trajectory_controller" />
+    <arg name="robot_name" value="$(arg robot_name)" />
+    <arg name="model" value="$(arg model)" />
+</include>
+
+<!-- Robot interface -->
+<include file="$(find iiwa_hw)/launch/iiwa_hw.launch" >
+    <arg name="hardware_interface" value="$(arg hardware_interface)" />
+</include>
+
+</launch>
